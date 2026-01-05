@@ -1,0 +1,3 @@
+{
+  "/(dashboard)/geofences/page": "app/(dashboard)/geofences/page.js"
+}
