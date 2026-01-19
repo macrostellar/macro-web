@@ -40,7 +40,7 @@ export default function SettingsPage() {
       try {
         const { data, error } = await supabase
           .from('profiles')
-          .select('id, full_name, company_name, phone, email, role, created_at, company_id')
+          .select('*')
           .eq('id', user.id)
           .maybeSingle();
 
@@ -56,7 +56,7 @@ export default function SettingsPage() {
           const { data: newProfile } = await supabase
             .from('profiles')
             .insert([{ id: user.id, email: user.email }])
-            .select("id, full_name, company_name, phone, email, role, created_at, company_id")
+            .select("*")
             .maybeSingle();
           if (newProfile) {
             setProfile(newProfile);

@@ -8,15 +8,15 @@ const containerStyle = {
   height: "500px",
 };
 const defaultCenter = {
-  lat: mockPosition.lat,
-  lng: mockPosition.lng,
+  lat: 33.6844, // Islamabad default
+  lng: 73.0479,
 };
 export default function VehicleMap() {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [position, setPosition] = useState(defaultCenter);
 
   useEffect(() => {
     const deviceId = "test-device-1"; // Your mock device

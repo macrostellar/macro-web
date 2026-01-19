@@ -87,8 +87,65 @@ export default function ContactPage() {
           <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
 
           {success && (
-              // This route is now disabled as the admin dashboard is standalone.
-              export default function ContactDisabled() {
-                return null;
-              }
+            <div className="bg-green-500/10 border border-green-500 rounded-lg p-4 mb-6">
+              <p className="text-green-400">Message sent successfully!</p>
             </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="Your name"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="Your email"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Message
+              </label>
+              <textarea
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                required
+                rows={5}
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="Your message"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+            >
+              <Send className="w-4 h-4" />
+              {loading ? 'Sending...' : 'Send Message'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

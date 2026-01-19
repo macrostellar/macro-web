@@ -197,7 +197,7 @@ const MODEL_OPTIONS = {
   other: ["Generic Model"],
 };
 
-export default function AddVehicleModal({ onClose, onSuccess }) {
+export default function AddVehicleModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
   const { user } = useAuth();
   const { drivers, setLocalSelectedDriver } = useDrivers();
   // only show drivers created by the current user
@@ -206,7 +206,19 @@ export default function AddVehicleModal({ onClose, onSuccess }) {
   const [error, setError] = useState("");
   const [selectedDriver, setSelectedDriver] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    vehicle_type: string;
+    brand: string;
+    registration_number: string;
+    vin: string;
+    tracker_id: string;
+    model: string;
+    image_url: string;
+    imageFile: File | null;
+    custom_brand: string;
+    assignedDriverId: string | null;
+  }>({
     name: "",
     vehicle_type: "car",
     brand: "",
@@ -307,11 +319,11 @@ export default function AddVehicleModal({ onClose, onSuccess }) {
     }
   };
 
-  const brandList = BRAND_OPTIONS[formData.vehicle_type] || [];
+  const brandList = BRAND_OPTIONS[formData.vehicle_type as keyof typeof BRAND_OPTIONS] || [];
   // if user selected "Other" use the custom_brand as effective brand for model lookup
   const effectiveBrand =
     formData.brand === "Other" ? formData.custom_brand || "" : formData.brand;
-  const modelOptions = MODEL_OPTIONS[effectiveBrand] || [];
+  const modelOptions = MODEL_OPTIONS[effectiveBrand as keyof typeof MODEL_OPTIONS] || [];
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">

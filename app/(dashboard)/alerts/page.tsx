@@ -287,12 +287,6 @@ export default function AlertsPage() {
                       <span>
                         {new Date(alert.created_at ?? "").toLocaleString()}
                       </span>
-                      {alert.speed_recorded && alert.speed_limit && (
-                        <span className="flex items-center gap-1 text-orange-400">
-                          <Gauge className="w-4 h-4" />
-                          {alert.speed_recorded} / {alert.speed_limit} km/h
-                        </span>
-                      )}
                     </div>
                     {alert.acknowledged && alert.acknowledged_at && (
                       <p className="text-green-400 text-sm mt-2 flex items-center gap-1">

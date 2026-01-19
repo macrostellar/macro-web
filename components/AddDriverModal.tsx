@@ -4,12 +4,20 @@ import { X } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../contexts/AuthContext";
 
-export default function AddDriverModal({ onClose, onSuccess }) {
+export default function AddDriverModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    full_name: string;
+    phone_number: string;
+    email: string;
+    license_number: string;
+    license_expiry: string;
+    driverImageFile: File | null;
+    licenseImageFile: File | null;
+  }>({
     full_name: "",
     phone_number: "",
     email: "",
@@ -36,7 +44,7 @@ export default function AddDriverModal({ onClose, onSuccess }) {
   return path; // return file path to store in DB
 };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -55,8 +63,8 @@ export default function AddDriverModal({ onClose, onSuccess }) {
 
       const companyId = profile?.company_id ?? user.id;
 
-      let driverImageUrl = ""; 
-      let licenseImageUrl = "";
+      let driverImageUrl: string | null = null; 
+      let licenseImageUrl: string | null = null;
 
       // Upload Driver Photo
       if (formData.driverImageFile) {
@@ -92,7 +100,8 @@ formData.licenseImageFile, `${driverId}/license.jpg`
       onSuccess();
     } catch (err) {
       console.error(err);
-      setError(err.message || "Failed to add owner");
+      const errorMessage = err instanceof Error ? err.message : "Failed to add owner";
+      setError(errorMessage);
     }
 
     setLoading(false);
@@ -209,7 +218,7 @@ formData.licenseImageFile, `${driverId}/license.jpg`
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  driverImageFile: e.target.files[0],
+                  driverImageFile: e.target.files?.[0] ?? null,
                 })
               }
               className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"

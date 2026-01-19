@@ -63,7 +63,7 @@ const BRANDS_BY_TYPE = {
   other: ["Other"],
 };
 
-export default function EditVehicleModal({ vehicle, onClose, onSuccess }: any) {
+export default function EditVehicleModal({ vehicle, onClose, onSuccess }: { vehicle: any; onClose: () => void; onSuccess: () => void }) {
   const { user } = useAuth();
   const { drivers } = useDrivers();
   const [loading, setLoading] = useState(false);

@@ -1,0 +1,17 @@
+.git
+.gitignore
+README.md
+node_modules
+npm-debug.log
+.next/cache
+.env.local
+.env.*.local
+*.md
+.DS_Store
+.vscode
+.idea
+supabase
+scripts
+public/*.png
+public/*.jpg
+out
