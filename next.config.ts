@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Set base path for admin deployment
+  basePath: '/macrotracking',
   // Enable React strict mode for better development experience
   reactStrictMode: true,
   

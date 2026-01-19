@@ -2,9 +2,13 @@
   "/(dashboard)/alerts/page": "app/(dashboard)/alerts/page.js",
   "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
   "/(dashboard)/geofences/page": "app/(dashboard)/geofences/page.js",
+  "/(dashboard)/global-vehicles/page": "app/(dashboard)/global-vehicles/page.js",
   "/(dashboard)/live-tracking/page": "app/(dashboard)/live-tracking/page.js",
+  "/(dashboard)/owners/page": "app/(dashboard)/owners/page.js",
   "/(dashboard)/reports/page": "app/(dashboard)/reports/page.js",
+  "/(dashboard)/settings/page": "app/(dashboard)/settings/page.js",
   "/(dashboard)/vehicles/page": "app/(dashboard)/vehicles/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
   "/signin/page": "app/signin/page.js"
 }

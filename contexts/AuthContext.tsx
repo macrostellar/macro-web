@@ -61,6 +61,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [role, setRole] = useState<UserRole>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchProfile = async (userId: string) => {
     try {
@@ -73,10 +74,14 @@ function AuthProvider({ children }: { children: ReactNode }) {
       if (data && !error) {
         setProfile(data as Profile);
         setRole(data.role as UserRole);
+        // Cache profile in localStorage
+        window.localStorage.setItem('profile', JSON.stringify(data));
       } else if (error) {
+        setError('Error fetching profile');
         console.error('Error fetching profile:', error);
       }
     } catch (error) {
+      setError('Error fetching profile');
       console.error('Error fetching profile:', error);
     }
   };
@@ -90,27 +95,42 @@ function AuthProvider({ children }: { children: ReactNode }) {
   // Initialize session and auth state
   useEffect(() => {
     let isMounted = true;
-    
+
+    // Try to restore profile from localStorage instantly
+    const cachedProfile = typeof window !== 'undefined' ? window.localStorage.getItem('profile') : null;
+    if (cachedProfile) {
+      try {
+        const parsed = JSON.parse(cachedProfile);
+        setProfile(parsed);
+        setRole(parsed.role as UserRole);
+      } catch {}
+    }
+
     const initAuth = async () => {
       try {
         // Add timeout to prevent infinite loading
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Auth timeout')), 10000)
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Auth timeout')), 7000)
         );
-        
+
         const sessionPromise = supabase.auth.getSession();
-        
+
         const { data } = await Promise.race([sessionPromise, timeoutPromise]) as { data: { session: any } };
-        
+
         if (!isMounted) return;
-        
+
         setSession(data.session);
         setUser(data.session?.user ?? null);
-        
+
         if (data.session?.user) {
           await fetchProfile(data.session.user.id);
+        } else {
+          setProfile(null);
+          setRole(null);
+          window.localStorage.removeItem('profile');
         }
       } catch (error) {
+        setError('Auth initialization error');
         console.error('Auth initialization error:', error);
       } finally {
         if (isMounted) {
@@ -123,17 +143,18 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (!isMounted) return;
-      
+
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
         await fetchProfile(session.user.id);
       } else {
         setProfile(null);
         setRole(null);
+        window.localStorage.removeItem('profile');
       }
-      
+
       setLoading(false);
     });
 
@@ -157,10 +178,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
           .eq('id', data.user.id);
 
         if (profileError) throw profileError;
+        // Cache profile instantly
+        window.localStorage.setItem('profile', JSON.stringify({ ...data.user, full_name: fullName, role: 'owner' }));
       }
 
       return { error: null };
     } catch (error) {
+      setError('SignUp Error');
       console.error('SignUp Error:', error);
       return { error: error as Error };
     }
@@ -169,10 +193,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
   // Sign In
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      // Cache profile instantly if available
+      if (data?.user) {
+        await fetchProfile(data.user.id);
+      }
       return { error: null };
     } catch (error) {
+      setError('SignIn Error');
       console.error('SignIn Error:', error);
       return { error: error as Error };
     }
@@ -186,10 +215,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
       setSession(null);
       setProfile(null);
       setRole(null);
+      window.localStorage.removeItem('profile');
       // Then sign out from Supabase
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     } catch (error) {
+      setError('SignOut Error');
       console.error('SignOut Error:', error);
     }
   };
@@ -212,6 +243,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
       signUp, signIn, signOut, refreshProfile,
       isSuperAdmin, isOwner, isDriver, hasPermission 
     }}>
+      {error && (
+        <div style={{position: 'fixed', top: 0, left: 0, right: 0, background: '#f87171', color: '#fff', padding: '8px', zIndex: 9999, textAlign: 'center'}}>
+          {error}
+        </div>
+      )}
       {children}
     </AuthContext.Provider>
   );
