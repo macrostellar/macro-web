@@ -1,7 +1,7 @@
 "use client";
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
-import { Globe, ArrowLeft } from 'lucide-react';
+import { Globe, ArrowLeft, Loader2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from "next/navigation";
 
@@ -10,23 +10,57 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
+  const { signIn, user, loading: authLoading } = useAuth();
  
   const router = useRouter();
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.replace('/dashboard');
+    }
+  }, [authLoading, user, router]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    const { error } = await signIn(email, password);
+    try {
+      const { error } = await signIn(email, password);
 
-    if (error) {
-      setError(error.message);
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+      } else {
+        // Give a moment for auth state to propagate, then navigate
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 100);
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
       setLoading(false);
-    } else {
-      router.push('/dashboard');
     }
   };
+
+  // Show loading while checking auth state
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
+      </div>
+    );
+  }
+
+  // Don't show sign-in form if already logged in
+  if (user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
