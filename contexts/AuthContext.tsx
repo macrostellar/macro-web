@@ -92,6 +92,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   // Initialize session and auth state
   useEffect(() => {
     let isMounted = true;
+    let authTimeout: NodeJS.Timeout;
 
     // Try to restore profile from localStorage instantly
     const cachedProfile = typeof window !== 'undefined' ? window.localStorage.getItem('profile') : null;
@@ -103,52 +104,22 @@ function AuthProvider({ children }: { children: ReactNode }) {
       } catch {}
     }
 
-    const initAuth = async () => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-
-        if (!isMounted) return;
-
-        if (error) {
-          console.error('Error getting session:', error);
-          setSession(null);
-          setUser(null);
-          setProfile(null);
-          setRole(null);
-          window.localStorage.removeItem('profile');
-        } else {
-          setSession(data.session);
-          setUser(data.session?.user ?? null);
-
-          if (data.session?.user) {
-            await fetchProfile(data.session.user.id);
-          } else {
-            setProfile(null);
-            setRole(null);
-            window.localStorage.removeItem('profile');
-          }
-        }
-      } catch (error) {
-        console.error('Auth initialization error:', error);
-        // Use cached data if available
-        if (!cachedProfile) {
-          setSession(null);
-          setUser(null);
-          setProfile(null);
-          setRole(null);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+    // Set a timeout to stop loading even if auth hangs
+    authTimeout = setTimeout(() => {
+      if (isMounted && loading) {
+        console.warn('Auth timeout - stopping loading state');
+        setLoading(false);
       }
-    };
+    }, 4000);
 
-    initAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    // Listen to auth state changes - this is more reliable than getSession
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!isMounted) return;
-
+      
+      console.log('Auth state change:', event, session?.user?.email);
+      
+      clearTimeout(authTimeout);
+      
       setSession(session);
       setUser(session?.user ?? null);
 
@@ -157,14 +128,43 @@ function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         setProfile(null);
         setRole(null);
-        window.localStorage.removeItem('profile');
+        if (event === 'SIGNED_OUT') {
+          window.localStorage.removeItem('profile');
+        }
       }
 
       setLoading(false);
     });
 
+    // Also try to get initial session (but don't block on it)
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (!isMounted) return;
+      
+      if (error) {
+        console.error('Error getting session:', error);
+      }
+      
+      // If we got a session and haven't received an auth state change yet
+      if (data.session && !user) {
+        setSession(data.session);
+        setUser(data.session.user);
+        fetchProfile(data.session.user.id);
+      }
+      
+      // Always stop loading after getSession completes
+      clearTimeout(authTimeout);
+      setLoading(false);
+    }).catch((error) => {
+      console.error('Auth initialization error:', error);
+      if (isMounted) {
+        clearTimeout(authTimeout);
+        setLoading(false);
+      }
+    });
+
     return () => {
       isMounted = false;
+      clearTimeout(authTimeout);
       subscription.unsubscribe();
     };
   }, []);

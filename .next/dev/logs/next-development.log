@@ -1,5 +1,13 @@
-[00:00:00.970] Server  LOG      ✓ Ready in 707ms
-[00:00:03.794] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:19.002] Browser ERROR   Auth initialization error: {}
-[00:00:19.002] Browser LOG     Using cached profile due to auth timeout
-[00:00:32.547] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:00.739] Server  LOG      ✓ Ready in 538ms
+[00:00:05.047] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.050] Browser ERROR   {"__isAuthError":true,"code":"refresh_token_not_found","name":"AuthApiError","status":400}
+[00:00:32.267] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:37.375] Browser LOG     Auth loading timeout - showing dashboard with cached data
+[00:01:32.632] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./contexts/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:01:32.650] Server  LOG      ✓ Compiled in 73ms
+[00:01:32.955] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:33.475] Browser LOG     Auth state change: INITIAL_SESSION sarahasif@rppnet.com
+[00:01:41.684] Browser LOG     Auth state change: SIGNED_IN sarahasif@rppnet.com
+[00:01:48.906] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:49.090] Browser LOG     Auth state change: SIGNED_IN sarahasif@rppnet.com
+[00:01:54.075] Browser LOG     Auth loading timeout - showing dashboard with cached data

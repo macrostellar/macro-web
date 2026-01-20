@@ -102,7 +102,6 @@ function AuthProvider({ children }) {
     const [profile, setProfile] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [role, setRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
-    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const fetchProfile = async (userId)=>{
         try {
             const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('profiles').select('*').eq('id', userId).maybeSingle();
@@ -112,11 +111,9 @@ function AuthProvider({ children }) {
                 // Cache profile in localStorage
                 window.localStorage.setItem('profile', JSON.stringify(data));
             } else if (error) {
-                setError('Error fetching profile');
                 console.error('Error fetching profile:', error);
             }
         } catch (error) {
-            setError('Error fetching profile');
             console.error('Error fetching profile:', error);
         }
     };
@@ -128,46 +125,23 @@ function AuthProvider({ children }) {
     // Initialize session and auth state
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         let isMounted = true;
+        let authTimeout;
         // Try to restore profile from localStorage instantly
         const cachedProfile = ("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : null;
         if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
         ;
-        const initAuth = async ()=>{
-            try {
-                // Increase timeout to handle cold starts and network latency
-                const timeoutPromise = new Promise((_, reject)=>setTimeout(()=>reject(new Error('Auth timeout')), 15000));
-                const sessionPromise = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].auth.getSession();
-                const { data } = await Promise.race([
-                    sessionPromise,
-                    timeoutPromise
-                ]);
-                if (!isMounted) return;
-                setSession(data.session);
-                setUser(data.session?.user ?? null);
-                if (data.session?.user) {
-                    await fetchProfile(data.session.user.id);
-                } else {
-                    setProfile(null);
-                    setRole(null);
-                    window.localStorage.removeItem('profile');
-                }
-            } catch (error) {
-                console.error('Auth initialization error:', error);
-                // Don't show error banner for timeout - just use cached data if available
-                if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
-                ;
-                else {
-                    setError('Connection timeout. Please refresh the page.');
-                }
-            } finally{
-                if (isMounted) {
-                    setLoading(false);
-                }
+        // Set a timeout to stop loading even if auth hangs
+        authTimeout = setTimeout(()=>{
+            if (isMounted && loading) {
+                console.warn('Auth timeout - stopping loading state');
+                setLoading(false);
             }
-        };
-        initAuth();
-        const { data: { subscription } } = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].auth.onAuthStateChange(async (_event, session)=>{
+        }, 4000);
+        // Listen to auth state changes - this is more reliable than getSession
+        const { data: { subscription } } = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].auth.onAuthStateChange(async (event, session)=>{
             if (!isMounted) return;
+            console.log('Auth state change:', event, session?.user?.email);
+            clearTimeout(authTimeout);
             setSession(session);
             setUser(session?.user ?? null);
             if (session?.user) {
@@ -175,12 +149,37 @@ function AuthProvider({ children }) {
             } else {
                 setProfile(null);
                 setRole(null);
-                window.localStorage.removeItem('profile');
+                if (event === 'SIGNED_OUT') {
+                    window.localStorage.removeItem('profile');
+                }
             }
             setLoading(false);
         });
+        // Also try to get initial session (but don't block on it)
+        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].auth.getSession().then(({ data, error })=>{
+            if (!isMounted) return;
+            if (error) {
+                console.error('Error getting session:', error);
+            }
+            // If we got a session and haven't received an auth state change yet
+            if (data.session && !user) {
+                setSession(data.session);
+                setUser(data.session.user);
+                fetchProfile(data.session.user.id);
+            }
+            // Always stop loading after getSession completes
+            clearTimeout(authTimeout);
+            setLoading(false);
+        }).catch((error)=>{
+            console.error('Auth initialization error:', error);
+            if (isMounted) {
+                clearTimeout(authTimeout);
+                setLoading(false);
+            }
+        });
         return ()=>{
             isMounted = false;
+            clearTimeout(authTimeout);
             subscription.unsubscribe();
         };
     }, []);
@@ -210,7 +209,6 @@ function AuthProvider({ children }) {
                 error: null
             };
         } catch (error) {
-            setError('SignUp Error');
             console.error('SignUp Error:', error);
             return {
                 error: error
@@ -233,7 +231,6 @@ function AuthProvider({ children }) {
                 error: null
             };
         } catch (error) {
-            setError('SignIn Error');
             console.error('SignIn Error:', error);
             return {
                 error: error
@@ -253,7 +250,6 @@ function AuthProvider({ children }) {
             const { error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].auth.signOut();
             if (error) throw error;
         } catch (error) {
-            setError('SignOut Error');
             console.error('SignOut Error:', error);
         }
     };
@@ -283,30 +279,10 @@ function AuthProvider({ children }) {
             isDriver,
             hasPermission
         },
-        children: [
-            error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                style: {
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    background: '#f87171',
-                    color: '#fff',
-                    padding: '8px',
-                    zIndex: 9999,
-                    textAlign: 'center'
-                },
-                children: error
-            }, void 0, false, {
-                fileName: "[project]/contexts/AuthContext.tsx",
-                lineNumber: 252,
-                columnNumber: 9
-            }, this),
-            children
-        ]
-    }, void 0, true, {
+        children: children
+    }, void 0, false, {
         fileName: "[project]/contexts/AuthContext.tsx",
-        lineNumber: 246,
+        lineNumber: 243,
         columnNumber: 5
     }, this);
 }
