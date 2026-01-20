@@ -77,15 +77,27 @@ export default function DashboardPage() {
         // -----------------------
         // 3) Fetch data in parallel but only what's needed
         // -----------------------
-        const [vehiclesResult, alertsResult, driversResult, trackingResult] = await Promise.all([
+        const [vehiclesResult, alertsResult, driversResult] = await Promise.all([
           supabase.from("vehicles").select("*").or(orFilter),
           supabase.from("alerts").select("*").or(orFilter).order("created_at", { ascending: false }).limit(10),
           supabase.from("drivers").select("id, full_name, phone_number, status, assigned_vehicle_id, email").or(orFilter),
-          supabase.from("tracking_data").select("speed, vehicle_id, timestamp").or(orFilter).order("timestamp", { ascending: false }).limit(20),
         ]);
 
         clearTimeout(timeoutId);
         if (!isMounted) return;
+
+        // Fetch tracking data separately using vehicle IDs (tracking_data doesn't have user_id/company_id)
+        let trackingResult = { data: [] as any[] };
+        if (vehiclesResult.data && vehiclesResult.data.length > 0) {
+          const vehicleIds = vehiclesResult.data.map((v: any) => v.id);
+          const { data: trackingData } = await supabase
+            .from("tracking_data")
+            .select("speed, vehicle_id, timestamp")
+            .in("vehicle_id", vehicleIds)
+            .order("timestamp", { ascending: false })
+            .limit(20);
+          trackingResult.data = trackingData || [];
+        }
 
         // Only super admins need global vehicle count
         let globalResult = null;
