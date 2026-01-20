@@ -141,11 +141,11 @@ function AuthProvider({ children }) {
             const initAuth = {
                 "AuthProvider.useEffect.initAuth": async ()=>{
                     try {
-                        // Add timeout to prevent infinite loading
+                        // Increase timeout to handle cold starts and network latency
                         const timeoutPromise = new Promise({
                             "AuthProvider.useEffect.initAuth": (_, reject)=>setTimeout({
                                     "AuthProvider.useEffect.initAuth": ()=>reject(new Error('Auth timeout'))
-                                }["AuthProvider.useEffect.initAuth"], 7000)
+                                }["AuthProvider.useEffect.initAuth"], 15000)
                         }["AuthProvider.useEffect.initAuth"]);
                         const sessionPromise = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["supabase"].auth.getSession();
                         const { data } = await Promise.race([
@@ -163,8 +163,13 @@ function AuthProvider({ children }) {
                             window.localStorage.removeItem('profile');
                         }
                     } catch (error) {
-                        setError('Auth initialization error');
                         console.error('Auth initialization error:', error);
+                        // Don't show error banner for timeout - just use cached data if available
+                        if (cachedProfile) {
+                            console.log('Using cached profile due to auth timeout');
+                        } else {
+                            setError('Connection timeout. Please refresh the page.');
+                        }
                     } finally{
                         if (isMounted) {
                             setLoading(false);
@@ -311,14 +316,14 @@ function AuthProvider({ children }) {
                 children: error
             }, void 0, false, {
                 fileName: "[project]/contexts/AuthContext.tsx",
-                lineNumber: 247,
+                lineNumber: 252,
                 columnNumber: 9
             }, this),
             children
         ]
     }, void 0, true, {
         fileName: "[project]/contexts/AuthContext.tsx",
-        lineNumber: 241,
+        lineNumber: 246,
         columnNumber: 5
     }, this);
 }

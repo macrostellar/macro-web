@@ -132,7 +132,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <img
             src="https://rppnet.com/wp-content/uploads/2026/01/full_logo_white_version.png"
             alt="Macrostellar Logo"
-            className="h-12"
+            className="h-full w-full"
           />
         </div>
 

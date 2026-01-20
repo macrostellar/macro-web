@@ -1429,6 +1429,10 @@
     }
   }
 
+  .bg-blue-600 {
+    background-color: var(--color-blue-600);
+  }
+
   .bg-cyan-500\/10 {
     background-color: #00b7d71a;
   }
@@ -2011,6 +2015,10 @@
     font-style: italic;
   }
 
+  .placeholder-slate-400::placeholder {
+    color: var(--color-slate-400);
+  }
+
   .placeholder-slate-500::placeholder {
     color: var(--color-slate-500);
   }
@@ -2226,6 +2234,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-blue-700:hover {
+      background-color: var(--color-blue-700);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-green-500\/20:hover {
       background-color: #00c75833;
     }
@@ -2398,6 +2412,10 @@
 
   .disabled\:cursor-not-allowed:disabled {
     cursor: not-allowed;
+  }
+
+  .disabled\:bg-slate-600:disabled {
+    background-color: var(--color-slate-600);
   }
 
   .disabled\:opacity-50:disabled {
