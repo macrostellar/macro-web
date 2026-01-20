@@ -348,39 +348,38 @@ export default function AddVehicleModal({ onClose, onSuccess }: { onClose: () =>
 
           {/* grid layout: 1 col on small, 2 cols on sm+ screens */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Driver / Owner */}
+            {/* Driver / Owner - Optional */}
             <div className="sm:col-span-2">
               <label className="block text-sm font-medium text-slate-300 mb-2">
-                Owner Name *
+                Assign to Owner {userDrivers.length > 0 && <span className="text-slate-500">(Optional)</span>}
               </label>
-              <select
-                required
-                value={selectedDriver ?? ""}
-                onChange={(e) => {
-                  const driverId = e.target.value || null;
-                  setSelectedDriver(driverId);
-                  setLocalSelectedDriver(driverId);
-                  const selected = drivers.find((d) => d.id === driverId);
-                  setFormData({
-                    ...formData,
-                    name: selected ? selected.full_name : "",
-                  });
-                }}
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
-              >
-                <option value="">Select Driver</option>
-                {userDrivers.length === 0 ? (
-                  <option value="" disabled>
-                    No drivers found
-                  </option>
-                ) : (
-                  userDrivers.map((driver) => (
+              {userDrivers.length === 0 ? (
+                <div className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-slate-400 text-sm">
+                  No owners available. You can add owners later from the Vehicle Owners page.
+                </div>
+              ) : (
+                <select
+                  value={selectedDriver ?? ""}
+                  onChange={(e) => {
+                    const driverId = e.target.value || null;
+                    setSelectedDriver(driverId);
+                    setLocalSelectedDriver(driverId);
+                    const selected = drivers.find((d) => d.id === driverId);
+                    setFormData({
+                      ...formData,
+                      name: selected ? selected.full_name : "",
+                    });
+                  }}
+                  className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                >
+                  <option value="">No owner assigned</option>
+                  {userDrivers.map((driver) => (
                     <option key={driver.id} value={driver.id}>
                       {driver.full_name}
                     </option>
-                  ))
-                )}
-              </select>
+                  ))}
+                </select>
+              )}
             </div>
 
             {/* Vehicle Type */}
