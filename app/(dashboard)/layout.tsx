@@ -131,8 +131,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="flex flex-col items-center p-4 gap-1">
           <img
             src="https://rppnet.com/wp-content/uploads/2026/01/full_logo_white_version.png"
-            alt="Macrostellar Logo"
-            className="h-full w-full"
+            alt="RPP Logo"
+            className="h-10 w-auto"
           />
         </div>
 
