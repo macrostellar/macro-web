@@ -413,36 +413,14 @@ function AlertsPage() {
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "flex items-center gap-4 text-slate-500 text-sm",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        children: new Date(alert.created_at ?? "").toLocaleString()
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                                        lineNumber: 287,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    alert.speed_recorded && alert.speed_limit && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "flex items-center gap-1 text-orange-400",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$gauge$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Gauge$3e$__["Gauge"], {
-                                                                className: "w-4 h-4"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                                                lineNumber: 292,
-                                                                columnNumber: 27
-                                                            }, this),
-                                                            alert.speed_recorded,
-                                                            " / ",
-                                                            alert.speed_limit,
-                                                            " km/h"
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                                        lineNumber: 291,
-                                                        columnNumber: 25
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: new Date(alert.created_at ?? "").toLocaleString()
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/(dashboard)/alerts/page.tsx",
+                                                    lineNumber: 287,
+                                                    columnNumber: 23
+                                                }, this)
+                                            }, void 0, false, {
                                                 fileName: "[project]/app/(dashboard)/alerts/page.tsx",
                                                 lineNumber: 286,
                                                 columnNumber: 21
@@ -454,7 +432,7 @@ function AlertsPage() {
                                                         className: "w-4 h-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                                        lineNumber: 299,
+                                                        lineNumber: 293,
                                                         columnNumber: 25
                                                     }, this),
                                                     "Acknowledged",
@@ -463,7 +441,7 @@ function AlertsPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                                lineNumber: 298,
+                                                lineNumber: 292,
                                                 columnNumber: 23
                                             }, this)
                                         ]
@@ -480,14 +458,14 @@ function AlertsPage() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                                lineNumber: 310,
+                                                lineNumber: 304,
                                                 columnNumber: 23
                                             }, this),
                                             "Acknowledge"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(dashboard)/alerts/page.tsx",
-                                        lineNumber: 306,
+                                        lineNumber: 300,
                                         columnNumber: 21
                                     }, this)
                                 ]

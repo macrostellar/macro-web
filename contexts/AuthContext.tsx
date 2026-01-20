@@ -92,9 +92,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
   // Initialize session and auth state
   useEffect(() => {
     let isMounted = true;
-    let authTimeout: NodeJS.Timeout;
 
-    // Try to restore profile from localStorage instantly
+    // Try to restore profile from localStorage instantly for faster UI
     const cachedProfile = typeof window !== 'undefined' ? window.localStorage.getItem('profile') : null;
     if (cachedProfile) {
       try {
@@ -104,67 +103,49 @@ function AuthProvider({ children }: { children: ReactNode }) {
       } catch {}
     }
 
-    // Set a timeout to stop loading even if auth hangs
-    authTimeout = setTimeout(() => {
-      if (isMounted && loading) {
-        console.warn('Auth timeout - stopping loading state');
-        setLoading(false);
-      }
-    }, 4000);
-
-    // Listen to auth state changes - this is more reliable than getSession
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth event:', event);
+      
       if (!isMounted) return;
-      
-      console.log('Auth state change:', event, session?.user?.email);
-      
-      clearTimeout(authTimeout);
-      
+
       setSession(session);
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        await fetchProfile(session.user.id);
-      } else {
+        // Fetch profile in background, don't block
+        fetchProfile(session.user.id);
+      } else if (event === 'SIGNED_OUT') {
         setProfile(null);
         setRole(null);
-        if (event === 'SIGNED_OUT') {
-          window.localStorage.removeItem('profile');
-        }
+        window.localStorage.removeItem('profile');
       }
 
       setLoading(false);
     });
 
-    // Also try to get initial session (but don't block on it)
-    supabase.auth.getSession().then(({ data, error }) => {
+    // Then get initial session
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      console.log('Initial session check:', session?.user?.email || 'no session', error?.message || '');
+      
       if (!isMounted) return;
-      
-      if (error) {
-        console.error('Error getting session:', error);
+
+      setSession(session);
+      setUser(session?.user ?? null);
+
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      } else if (!cachedProfile) {
+        // No session and no cache - clear everything
+        setProfile(null);
+        setRole(null);
       }
-      
-      // If we got a session and haven't received an auth state change yet
-      if (data.session && !user) {
-        setSession(data.session);
-        setUser(data.session.user);
-        fetchProfile(data.session.user.id);
-      }
-      
-      // Always stop loading after getSession completes
-      clearTimeout(authTimeout);
+
       setLoading(false);
-    }).catch((error) => {
-      console.error('Auth initialization error:', error);
-      if (isMounted) {
-        clearTimeout(authTimeout);
-        setLoading(false);
-      }
     });
 
     return () => {
       isMounted = false;
-      clearTimeout(authTimeout);
       subscription.unsubscribe();
     };
   }, []);

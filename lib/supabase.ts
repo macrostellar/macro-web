@@ -18,17 +18,8 @@ function getSupabaseClient(): SupabaseClient<Database> {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
-      },
-      global: {
-        headers: {
-          'x-application-name': 'macrotracking',
-        },
-      },
-      // Optimize realtime connections
-      realtime: {
-        params: {
-          eventsPerSecond: 10,
-        },
+        storageKey: 'macrotracking-auth',
+        storage: typeof window !== 'undefined' ? window.localStorage : undefined,
       },
     });
   }

@@ -582,7 +582,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                             children: "Add New Vehicle"
                         }, void 0, false, {
                             fileName: "[project]/components/AddVehicleModal.tsx",
-                            lineNumber: 320,
+                            lineNumber: 332,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -593,18 +593,18 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                 className: "w-5 h-5 sm:w-6 sm:h-6"
                             }, void 0, false, {
                                 fileName: "[project]/components/AddVehicleModal.tsx",
-                                lineNumber: 326,
+                                lineNumber: 338,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/AddVehicleModal.tsx",
-                            lineNumber: 321,
+                            lineNumber: 333,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/AddVehicleModal.tsx",
-                    lineNumber: 319,
+                    lineNumber: 331,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -618,12 +618,12 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/components/AddVehicleModal.tsx",
-                                lineNumber: 333,
+                                lineNumber: 345,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/AddVehicleModal.tsx",
-                            lineNumber: 332,
+                            lineNumber: 344,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -634,14 +634,30 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             className: "block text-sm font-medium text-slate-300 mb-2",
-                                            children: "Owner Name *"
-                                        }, void 0, false, {
+                                            children: [
+                                                "Assign to Owner ",
+                                                userDrivers.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-slate-500",
+                                                    children: "(Optional)"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/AddVehicleModal.tsx",
+                                                    lineNumber: 354,
+                                                    columnNumber: 60
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 341,
+                                            lineNumber: 353,
                                             columnNumber: 15
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                            required: true,
+                                        userDrivers.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-slate-400 text-sm",
+                                            children: "No owners available. You can add owners later from the Vehicle Owners page."
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/AddVehicleModal.tsx",
+                                            lineNumber: 357,
+                                            columnNumber: 17
+                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                             value: selectedDriver ?? "",
                                             onChange: (e)=>{
                                                 const driverId = e.target.value || null;
@@ -657,38 +673,30 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                     value: "",
-                                                    children: "Select Driver"
+                                                    children: "No owner assigned"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 359,
-                                                    columnNumber: 17
-                                                }, this),
-                                                userDrivers.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                                    value: "",
-                                                    disabled: true,
-                                                    children: "No drivers found"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 361,
+                                                    lineNumber: 375,
                                                     columnNumber: 19
-                                                }, this) : userDrivers.map((driver)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                }, this),
+                                                userDrivers.map((driver)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                         value: driver.id,
                                                         children: driver.full_name
                                                     }, driver.id, false, {
                                                         fileName: "[project]/components/AddVehicleModal.tsx",
-                                                        lineNumber: 366,
+                                                        lineNumber: 377,
                                                         columnNumber: 21
                                                     }, this))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 344,
-                                            columnNumber: 15
+                                            lineNumber: 361,
+                                            columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 340,
+                                    lineNumber: 352,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -698,7 +706,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "Vehicle Type *"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 376,
+                                            lineNumber: 387,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -716,7 +724,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Car"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 391,
+                                                    lineNumber: 402,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -724,7 +732,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Bus"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 392,
+                                                    lineNumber: 403,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -732,7 +740,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Truck"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 393,
+                                                    lineNumber: 404,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -740,7 +748,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Van"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 394,
+                                                    lineNumber: 405,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -748,7 +756,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Motorcycle"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 395,
+                                                    lineNumber: 406,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -756,19 +764,19 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Other"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 396,
+                                                    lineNumber: 407,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 379,
+                                            lineNumber: 390,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 375,
+                                    lineNumber: 386,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -778,7 +786,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "Brand *"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 402,
+                                            lineNumber: 413,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -797,7 +805,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Select Brand"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 418,
+                                                    lineNumber: 429,
                                                     columnNumber: 17
                                                 }, this),
                                                 [
@@ -807,7 +815,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                         children: b
                                                     }, b, false, {
                                                         fileName: "[project]/components/AddVehicleModal.tsx",
-                                                        lineNumber: 420,
+                                                        lineNumber: 431,
                                                         columnNumber: 19
                                                     }, this)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -815,19 +823,19 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Other"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 424,
+                                                    lineNumber: 435,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 405,
+                                            lineNumber: 416,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 401,
+                                    lineNumber: 412,
                                     columnNumber: 13
                                 }, this),
                                 formData.brand === "Other" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -837,7 +845,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "Enter Brand Name *"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 431,
+                                            lineNumber: 442,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -852,13 +860,13 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 434,
+                                            lineNumber: 445,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 430,
+                                    lineNumber: 441,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -868,7 +876,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "Model"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 449,
+                                            lineNumber: 460,
                                             columnNumber: 15
                                         }, this),
                                         modelOptions && modelOptions.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -884,7 +892,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                     children: "Select Model"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                                    lineNumber: 460,
+                                                    lineNumber: 471,
                                                     columnNumber: 19
                                                 }, this),
                                                 modelOptions.map((m)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -892,13 +900,13 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                                         children: m
                                                     }, m, false, {
                                                         fileName: "[project]/components/AddVehicleModal.tsx",
-                                                        lineNumber: 462,
+                                                        lineNumber: 473,
                                                         columnNumber: 21
                                                     }, this))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 453,
+                                            lineNumber: 464,
                                             columnNumber: 17
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
@@ -911,13 +919,13 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 468,
+                                            lineNumber: 479,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 448,
+                                    lineNumber: 459,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -927,7 +935,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "Tracker ID *"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 482,
+                                            lineNumber: 493,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -941,13 +949,13 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 485,
+                                            lineNumber: 496,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 481,
+                                    lineNumber: 492,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -957,7 +965,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "Registration Number *"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 498,
+                                            lineNumber: 509,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -971,13 +979,13 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 501,
+                                            lineNumber: 512,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 497,
+                                    lineNumber: 508,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -987,7 +995,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             children: "VIN *"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 517,
+                                            lineNumber: 528,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1001,13 +1009,13 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                             className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddVehicleModal.tsx",
-                                            lineNumber: 520,
+                                            lineNumber: 531,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 516,
+                                    lineNumber: 527,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1022,18 +1030,18 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                         className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/components/AddVehicleModal.tsx",
-                                        lineNumber: 533,
+                                        lineNumber: 544,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 532,
+                                    lineNumber: 543,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddVehicleModal.tsx",
-                            lineNumber: 338,
+                            lineNumber: 350,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1046,7 +1054,7 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 545,
+                                    lineNumber: 556,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1056,30 +1064,30 @@ function AddVehicleModal({ onClose, onSuccess }) {
                                     children: loading ? "Adding..." : "Add Vehicle"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddVehicleModal.tsx",
-                                    lineNumber: 552,
+                                    lineNumber: 563,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddVehicleModal.tsx",
-                            lineNumber: 544,
+                            lineNumber: 555,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/AddVehicleModal.tsx",
-                    lineNumber: 330,
+                    lineNumber: 342,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/AddVehicleModal.tsx",
-            lineNumber: 318,
+            lineNumber: 330,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/AddVehicleModal.tsx",
-        lineNumber: 317,
+        lineNumber: 329,
         columnNumber: 5
     }, this);
 }

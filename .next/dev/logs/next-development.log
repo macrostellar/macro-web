@@ -1,13 +1,17 @@
-[00:00:00.739] Server  LOG      ✓ Ready in 538ms
-[00:00:05.047] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:06.050] Browser ERROR   {"__isAuthError":true,"code":"refresh_token_not_found","name":"AuthApiError","status":400}
-[00:00:32.267] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:37.375] Browser LOG     Auth loading timeout - showing dashboard with cached data
-[00:01:32.632] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./contexts/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:01:32.650] Server  LOG      ✓ Compiled in 73ms
-[00:01:32.955] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:33.475] Browser LOG     Auth state change: INITIAL_SESSION sarahasif@rppnet.com
-[00:01:41.684] Browser LOG     Auth state change: SIGNED_IN sarahasif@rppnet.com
-[00:01:48.906] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:49.090] Browser LOG     Auth state change: SIGNED_IN sarahasif@rppnet.com
-[00:01:54.075] Browser LOG     Auth loading timeout - showing dashboard with cached data
+[00:00:01.046] Server  LOG      ✓ Ready in 783ms
+[00:00:03.911] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.143] Browser LOG     Auth event: INITIAL_SESSION
+[00:00:04.144] Browser LOG     Initial session check: no session 
+[00:00:08.242] Browser LOG     Auth event: SIGNED_IN
+[00:00:18.924] Browser WARN    Unable to perform style diff: Style is not done loading. Rebuilding the style from scratch.
+[00:00:20.093] Browser LOG     ✅ Realtime connected to tracking_data
+[00:00:43.555] Browser LOG     Auth event: SIGNED_OUT
+[00:00:47.813] Browser LOG     Auth event: SIGNED_IN
+[00:01:12.508] Browser LOG     ✅ Realtime connected to tracking_data
+[00:01:23.507] Browser LOG     Super admin: fetching ALL drivers
+[00:01:23.693] Browser LOG     Super admin: fetching ALL drivers
+[00:14:18.525] Browser LOG     Auth event: SIGNED_IN
+[00:14:21.352] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:21.650] Browser LOG     Auth event: INITIAL_SESSION
+[00:14:21.650] Browser LOG     Initial session check: fahad.salim@rppnet.com 
+[00:14:29.459] Browser LOG     Auth event: SIGNED_IN

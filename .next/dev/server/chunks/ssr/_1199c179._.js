@@ -52,8 +52,8 @@ function AddDriverModal({ onClose, onSuccess }) {
             // Get company_id from profile
             const { data: profile } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('profiles').select('company_id').eq('id', user.id).maybeSingle();
             const companyId = profile?.company_id ?? user.id;
-            let driverImageUrl = "";
-            let licenseImageUrl = "";
+            let driverImageUrl = null;
+            let licenseImageUrl = null;
             // Upload Driver Photo
             if (formData.driverImageFile) {
                 driverImageUrl = await uploadFile(formData.driverImageFile, `${driverId}/driver.jpg`);
@@ -80,7 +80,8 @@ function AddDriverModal({ onClose, onSuccess }) {
             onSuccess();
         } catch (err) {
             console.error(err);
-            setError(err.message || "Failed to add owner");
+            const errorMessage = err instanceof Error ? err.message : "Failed to add owner";
+            setError(errorMessage);
         }
         setLoading(false);
     };
@@ -97,7 +98,7 @@ function AddDriverModal({ onClose, onSuccess }) {
                             children: "Add New Owner"
                         }, void 0, false, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 107,
+                            lineNumber: 116,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -107,18 +108,18 @@ function AddDriverModal({ onClose, onSuccess }) {
                                 className: "w-6 h-6"
                             }, void 0, false, {
                                 fileName: "[project]/components/AddDriverModal.tsx",
-                                lineNumber: 112,
+                                lineNumber: 121,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 108,
+                            lineNumber: 117,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/AddDriverModal.tsx",
-                    lineNumber: 106,
+                    lineNumber: 115,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -132,12 +133,12 @@ function AddDriverModal({ onClose, onSuccess }) {
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/components/AddDriverModal.tsx",
-                                lineNumber: 120,
+                                lineNumber: 129,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 119,
+                            lineNumber: 128,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -147,7 +148,7 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     children: "Full Name *"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 126,
+                                    lineNumber: 135,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -161,13 +162,13 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 129,
+                                    lineNumber: 138,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 125,
+                            lineNumber: 134,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -177,7 +178,7 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     children: "Phone Number *"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 142,
+                                    lineNumber: 151,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -191,13 +192,13 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 145,
+                                    lineNumber: 154,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 141,
+                            lineNumber: 150,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -207,7 +208,7 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     children: "Email (optional)"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 158,
+                                    lineNumber: 167,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -220,13 +221,13 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 161,
+                                    lineNumber: 170,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 157,
+                            lineNumber: 166,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -236,7 +237,7 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     children: "Owner Photo"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 203,
+                                    lineNumber: 212,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -244,18 +245,18 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     accept: "image/*",
                                     onChange: (e)=>setFormData({
                                             ...formData,
-                                            driverImageFile: e.target.files[0]
+                                            driverImageFile: e.target.files?.[0] ?? null
                                         }),
                                     className: "w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 206,
+                                    lineNumber: 215,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 202,
+                            lineNumber: 211,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -268,7 +269,7 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 238,
+                                    lineNumber: 247,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -278,30 +279,30 @@ function AddDriverModal({ onClose, onSuccess }) {
                                     children: loading ? "Adding..." : "Add Owner"
                                 }, void 0, false, {
                                     fileName: "[project]/components/AddDriverModal.tsx",
-                                    lineNumber: 245,
+                                    lineNumber: 254,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/AddDriverModal.tsx",
-                            lineNumber: 237,
+                            lineNumber: 246,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/AddDriverModal.tsx",
-                    lineNumber: 116,
+                    lineNumber: 125,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/AddDriverModal.tsx",
-            lineNumber: 103,
+            lineNumber: 112,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/AddDriverModal.tsx",
-        lineNumber: 102,
+        lineNumber: 111,
         columnNumber: 5
     }, this);
 }
