@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // No basePath needed - using subdomain tracking.macrostellar.com
   // Enable React strict mode for better development experience
   reactStrictMode: true,
   
