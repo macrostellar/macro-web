@@ -27,26 +27,34 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
+  const [forceShow, setForceShow] = useState(false);
 
-  // Redirect to signin if not authenticated
+  // Redirect to signin if not authenticated (but only after loading is done)
   useEffect(() => {
-    if (!loading && !user && !redirecting) {
+    if (!loading && !user && !redirecting && !forceShow) {
       setRedirecting(true);
       router.replace("/signin");
     }
-  }, [loading, user, router, redirecting]);
+  }, [loading, user, router, redirecting, forceShow]);
 
-  // Safeguard: if loading takes too long, force redirect to signin
+  // Fallback: if loading takes too long, either show dashboard or redirect
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (loading && !user) {
-        console.warn('Auth loading timeout - redirecting to signin');
-        router.replace("/signin");
+      if (loading) {
+        // Check if we have cached user info in localStorage
+        const cachedProfile = localStorage.getItem('profile');
+        if (cachedProfile) {
+          console.log('Auth loading timeout - showing dashboard with cached data');
+          setForceShow(true);
+        } else {
+          console.warn('Auth loading timeout - no cached data, redirecting to signin');
+          router.replace("/signin");
+        }
       }
-    }, 10000); // 10 second timeout
+    }, 5000); // 5 second timeout
 
     return () => clearTimeout(timeout);
-  }, [loading, user, router]);
+  }, [loading, router]);
 
   const handleSignOut = async () => {
     if (isSigningOut) return; // Prevent double clicks
@@ -98,8 +106,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   
   navItems.push(settingsItem);
 
-  // Show loading spinner while auth is loading or signing out
-  if (loading || isSigningOut || redirecting) {
+  // Show loading spinner while auth is loading (unless force show) or signing out
+  if ((loading && !forceShow) || isSigningOut || redirecting) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
         <div className="text-center">
@@ -112,8 +120,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     );
   }
 
-  // Don't render if not authenticated
-  if (!user) {
+  // Don't render if not authenticated and not force showing
+  if (!user && !forceShow) {
     return null;
   }
 
