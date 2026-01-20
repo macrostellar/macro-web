@@ -130,7 +130,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="w-64 bg-slate-800 border-r border-slate-700 flex flex-col fixed left-0 top-0 h-screen">
         <div className="flex flex-col items-center p-4 gap-1">
           <img
-            src="https://macrostellar.com/wp-content/uploads/2025/11/1-e1763898340162.png"
+            src="https://rppnet.com/wp-content/uploads/2026/01/full_logo_white_version.png"
             alt="Macrostellar Logo"
             className="h-12"
           />

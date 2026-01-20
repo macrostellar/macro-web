@@ -108,9 +108,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
     const initAuth = async () => {
       try {
-        // Add timeout to prevent infinite loading
+        // Increase timeout to handle cold starts and network latency
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Auth timeout')), 7000)
+          setTimeout(() => reject(new Error('Auth timeout')), 15000)
         );
 
         const sessionPromise = supabase.auth.getSession();
@@ -130,8 +130,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
           window.localStorage.removeItem('profile');
         }
       } catch (error) {
-        setError('Auth initialization error');
         console.error('Auth initialization error:', error);
+        // Don't show error banner for timeout - just use cached data if available
+        if (cachedProfile) {
+          console.log('Using cached profile due to auth timeout');
+        } else {
+          setError('Connection timeout. Please refresh the page.');
+        }
       } finally {
         if (isMounted) {
           setLoading(false);
