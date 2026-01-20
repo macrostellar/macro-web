@@ -26,12 +26,26 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   // Redirect to signin if not authenticated
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && !redirecting) {
+      setRedirecting(true);
       router.replace("/signin");
     }
+  }, [loading, user, router, redirecting]);
+
+  // Safeguard: if loading takes too long, force redirect to signin
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (loading && !user) {
+        console.warn('Auth loading timeout - redirecting to signin');
+        router.replace("/signin");
+      }
+    }, 10000); // 10 second timeout
+
+    return () => clearTimeout(timeout);
   }, [loading, user, router]);
 
   const handleSignOut = async () => {
@@ -85,10 +99,15 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   navItems.push(settingsItem);
 
   // Show loading spinner while auth is loading or signing out
-  if (loading || isSigningOut) {
+  if (loading || isSigningOut || redirecting) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 text-blue-400 animate-spin mx-auto" />
+          <p className="text-slate-400 mt-2 text-sm">
+            {isSigningOut ? 'Signing out...' : 'Loading...'}
+          </p>
+        </div>
       </div>
     );
   }

@@ -108,34 +108,37 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
     const initAuth = async () => {
       try {
-        // Increase timeout to handle cold starts and network latency
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Auth timeout')), 15000)
-        );
-
-        const sessionPromise = supabase.auth.getSession();
-
-        const { data } = await Promise.race([sessionPromise, timeoutPromise]) as { data: { session: any } };
+        const { data, error } = await supabase.auth.getSession();
 
         if (!isMounted) return;
 
-        setSession(data.session);
-        setUser(data.session?.user ?? null);
-
-        if (data.session?.user) {
-          await fetchProfile(data.session.user.id);
-        } else {
+        if (error) {
+          console.error('Error getting session:', error);
+          setSession(null);
+          setUser(null);
           setProfile(null);
           setRole(null);
           window.localStorage.removeItem('profile');
+        } else {
+          setSession(data.session);
+          setUser(data.session?.user ?? null);
+
+          if (data.session?.user) {
+            await fetchProfile(data.session.user.id);
+          } else {
+            setProfile(null);
+            setRole(null);
+            window.localStorage.removeItem('profile');
+          }
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
-        // Don't show error banner for timeout - just use cached data if available
-        if (cachedProfile) {
-          console.log('Using cached profile due to auth timeout');
-        } else {
-          setError('Connection timeout. Please refresh the page.');
+        // Use cached data if available
+        if (!cachedProfile) {
+          setSession(null);
+          setUser(null);
+          setProfile(null);
+          setRole(null);
         }
       } finally {
         if (isMounted) {
