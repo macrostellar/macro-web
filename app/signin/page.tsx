@@ -10,6 +10,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const { signIn, user, loading: authLoading } = useAuth();
  
   const router = useRouter();
@@ -20,6 +21,23 @@ export default function SignInPage() {
       router.replace('/dashboard');
     }
   }, [authLoading, user, router]);
+
+  // Fallback: show form after 3 seconds even if auth is still loading
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (authLoading) {
+        console.log('Auth loading timeout - showing form anyway');
+        setShowForm(true);
+      }
+    }, 3000);
+
+    // Also show form immediately if auth finishes loading
+    if (!authLoading && !user) {
+      setShowForm(true);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [authLoading, user]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -33,10 +51,8 @@ export default function SignInPage() {
         setError(error.message);
         setLoading(false);
       } else {
-        // Give a moment for auth state to propagate, then navigate
-        setTimeout(() => {
-          router.push('/dashboard');
-        }, 100);
+        // Navigate to dashboard
+        router.push('/dashboard');
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
@@ -44,8 +60,8 @@ export default function SignInPage() {
     }
   };
 
-  // Show loading while checking auth state
-  if (authLoading) {
+  // Show loading only briefly, then show form
+  if (!showForm && authLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
@@ -53,7 +69,7 @@ export default function SignInPage() {
     );
   }
 
-  // Don't show sign-in form if already logged in
+  // Don't show sign-in form if already logged in (redirect will happen)
   if (user) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
