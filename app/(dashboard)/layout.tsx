@@ -125,6 +125,24 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     return null;
   }
 
+  // Mobile detection - show message on small screens
+  const MobileMessage = () => (
+    <div className="lg:hidden fixed inset-0 bg-slate-900 z-50 flex items-center justify-center p-6">
+      <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 max-w-sm text-center">
+        <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <LayoutDashboard className="w-8 h-8 text-blue-400" />
+        </div>
+        <h2 className="text-xl font-bold text-white mb-2">Desktop Required</h2>
+        <p className="text-slate-400 text-sm mb-4">
+          For the best experience, please open MacroTracking on a desktop or laptop computer.
+        </p>
+        <p className="text-slate-500 text-xs">
+          Visit <span className="text-blue-400">macrotracking.macrostellar.com</span> on your computer to access the full dashboard.
+        </p>
+      </div>
+    </div>
+  );
+
   // Get role badge color
   const getRoleBadgeColor = () => {
     switch (role) {
@@ -154,7 +172,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-slate-900 flex">
-      <div className="w-64 bg-slate-800 border-r border-slate-700 flex flex-col fixed left-0 top-0 h-screen">
+      <MobileMessage />
+      <div className="w-64 bg-slate-800 border-r border-slate-700 flex flex-col fixed left-0 top-0 h-screen hidden lg:flex">
         <div className="flex flex-col items-center p-4 gap-1">
           <img
             src="https://rppnet.com/wp-content/uploads/2026/01/full_logo_white_version.png"
@@ -211,7 +230,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      <div className="ml-64 flex-1 min-h-screen overflow-y-auto">
+      <div className="lg:ml-64 flex-1 min-h-screen overflow-y-auto hidden lg:block">
         {children}
       </div>
     </div>
